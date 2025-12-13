@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* LOGIN */
+.login-body {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+}
+
+.login-box {
+  background: white;
+  padding: 30px;
+  width: 300px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.login-box h2 {
+  text-align: center;
+}
+
+.login-box input, .login-box button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+/* NAVBAR */
+.admin-navbar {
+  background: #111;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* LAYOUT */
+.admin-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: #222;
+  height: calc(100vh - 60px);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background: #444;
+}
+
+.content {
+  padding: 20px;
+  flex: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #111;
+  color: white;
+}
+
+td, th {
+  text-align: left;
+}

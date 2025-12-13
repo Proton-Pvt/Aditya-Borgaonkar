@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Event</title>
+    <link rel="stylesheet" href="../style/book_event.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Book Your Event</h2>
+
+        <form action="http://localhost:4000/book-event" id="bookingForm" method="POST">
+
+            <!-- Event Name (Auto-filled) -->
+            <label>Selected Event</label>
+            <input type="text" id="eventName" name="eventName" readonly>
+
+            <input type="text" name="name" placeholder="Your Full Name" required>
+
+            <input type="email" name="email" placeholder="Your Email Address" required>
+
+            <input type="tel" name="phone" placeholder="Mobile Number" required>
+
+            <label>Event Date</label>
+            <input type="date" name="eventDate" required>
+
+            <label>Number of Guests</label>
+            <input type="number" name="guests" placeholder="Approx Guest Count" required>
+
+            <label>Venue Type</label>
+            <select name="venue">
+                <option>Banquet Hall</option>
+                <option>Outdoor Lawn</option>
+                <option>Resort</option>
+                <option>At Home</option>
+            </select>
+
+            <textarea name="message" rows="5" placeholder="Additional Details (optional)"></textarea>
+
+            <button type="submit">Submit Booking Request</button>
+
+        </form>
+    </div>
+
+    <script>
+
+        // Auto-fill event name
+        const params = new URLSearchParams(window.location.search);
+        const event = params.get("event") || "Event";
+        const eventName = event.charAt(0).toUpperCase() + event.slice(1);
+        document.getElementById("eventName").value = eventName;
+
+        // Handle form submit using fetch()
+        document.getElementById("bookingForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // stop page reload
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch("http://localhost:3000/book-event", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    // SUCCESS → redirect
+                    window.location.href = "success.html";
+                } else {
+                    alert("Booking failed. Please try again.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Server error. Please try later.");
+            }
+        });
+
+
+
+        // Auto-fill event name from URL
+        const params1 = new URLSearch(window.location.search);
+        const eventName1 = params1.get("event") || "Event";
+        document.getElementById("eventName").value = eventName1.charAt(0).toUpperCase() + eventName1.slice(1);
+    </script>
+</body>
+
+</html>

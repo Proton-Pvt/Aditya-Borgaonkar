@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <h1>Elite Events</h1>
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- EVENT CONTENT -->
+    <section id="eventContent"></section>
+
+    <footer>
+        © 2025 Elite Events • Designed with ❤
+    </footer>
+
+<script>
+    // 1. Read selected event from URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const eventType = queryParams.get("event");
+
+    // 2. Data for each event type
+    const eventData = {
+        wedding: {
+            title: "Wedding Planning",
+            banner: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
+            description:
+                "We create magical weddings with complete decoration, theme setup, catering, photography, entertainment & guest hospitality.",
+            features: [
+                "Venue Decoration & Theme Setup",
+                "Catering & Food Arrangement",
+                "Music, DJ & Entertainment",
+                "Photography & Videography",
+                "Guest Management",
+                "Stage Setup & Lighting"
+            ],
+            price: "₹50,000"
+        },
+
+        corporate: {
+            title: "Corporate Event Management",
+            banner: "https://images.unsplash.com/photo-1503428593586-e225b39bddfe",
+            description:
+                "We organize premium corporate events including seminars, conferences, exhibitions & award shows.",
+            features: [
+                "Professional Stage Setup",
+                "Sound & Projection Systems",
+                "Corporate Branding",
+                "Seating & Hall Arrangements",
+                "Guest Coordination",
+                "Catering & Refreshments"
+            ],
+            price: "₹40,000"
+        },
+
+        birthday: {
+            title: "Birthday Party Planning",
+            banner: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622",
+            description:
+                "Celebrate your special day with theme décor, kids entertainment, lighting, games, cake table & fun activities.",
+            features: [
+                "Theme Decoration",
+                "Kids Entertainment & Games",
+                "Sound & Music",
+                "Custom Cake Table Decoration",
+                "Photo & Video Shoot",
+                "Return Gifts Arrangement"
+            ],
+            price: "₹15,000"
+        }
+    };
+
+    const event = eventData[eventType];
+
+    // 3. Inject event details dynamically
+    if (event) {
+        document.getElementById("eventContent").innerHTML = `
+            <section class="event-banner">
+                <img src="${event.banner}" alt="${event.title}">
+                <div class="banner-text">
+                    <h2>${event.title}</h2>
+                </div>
+            </section>
+
+            <section class="event-details">
+                <h3>About This Event</h3>
+                <p>${event.description}</p>
+
+                <h3>What’s Included?</h3>
+                <ul>
+                    ${event.features.map(f => `<li>✔ ${f}</li>`).join("")}
+                </ul>
+
+                <h3>Pricing</h3>
+                <p>Starting from <strong>${event.price}</strong> (custom packages available)</p>
+
+                <a href="book_event.html?event=${eventType}"><button class="btn book-btn">Book Your Event Now</button></a>
+            </section>
+        `;
+    } else {
+        document.getElementById("eventContent").innerHTML =
+            "<h2 style='text-align:center; margin:50px;'>Invalid Event Selected</h2>";
+    }
+</script>
+
+</body>
+</html>

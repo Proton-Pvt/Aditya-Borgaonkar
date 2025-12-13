@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login | Elite Events</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="login-body">
+
+  <div class="login-box">
+    <h2>Elite Events Admin</h2>
+
+    <form id="adminLoginForm">
+      <input type="email" name="email" placeholder="Admin Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+<script>
+document.getElementById("adminLoginForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+
+  const response = await fetch("http://localhost:4000/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  if (response.ok) {
+    window.location.href = "admin-dashboard.html";
+  } else {
+    alert("Invalid admin credentials");
+  }
+});
+</script>
+
+</body>
+</html>
