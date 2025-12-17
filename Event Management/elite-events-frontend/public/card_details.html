@@ -29,6 +29,9 @@
     // 1. Read selected event from URL
     const queryParams = new URLSearchParams(window.location.search);
     const eventType = queryParams.get("event");
+    const eventType1 = queryParams.get("id");
+
+console.log(eventType1);
 
     // 2. Data for each event type
     const eventData = {

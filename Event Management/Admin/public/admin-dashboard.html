@@ -1,99 +1,124 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <title>Admin Dashboard | Elite Events</title>
     <link rel="stylesheet" href="admin.css">
-    
-    </head>
-    <body>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
 
     <!-- NAVBAR -->
     <nav class="admin-navbar">
-    <div class="logo">EliteEvent</div>
-    <button onclick="logout()">Logout</button>
+        <div class="logo">EliteEvent</div>
+        <button onclick="logout()">Logout</button>
     </nav>
 
     <!-- SIDEBAR + CONTENT -->
     <div class="admin-container">
 
-    <aside class="sidebar">
-        <ul>
-        <li onclick="loadEnquiries()">Enquiries</li>
-        <li onclick="loadBookings()">Bookings</li>
-        </ul>
-    </aside>
+        <aside class="sidebar">
+            <ul>
+                <li onclick="loadDashboard()"><i class="ri-dashboard-horizontal-line"></i></i>Dashboard</li>
+                <li onclick="loadEnquiries()"><i class="ri-shield-user-line"></i>Enquiries</li>
+                <li onclick="loadBookings()"><i class="ri-calendar-event-line"></i>Bookings</li>
+            </ul>
+        </aside>
 
-    <main class="content" id="content">
-        <h2>Welcome Admin 👋</h2>
-        <p>Select an option from the sidebar to view data</p>
-    </main>
+        <main class="content" id="content">
+            <h2>Welcome Admin 👋</h2>
+            <p>Select an option from the sidebar to view data</p>
+
+        </main>
 
     </div>
 
     <script>
-    // Logout function
-    function logout() {
-    fetch("http://localhost:4000/admin/logout")
-        .then(() => window.location.href = "admin-login.html")
-        .catch(err => console.error(err));
-    }
-
-    // Load Enquiries
-    async function loadEnquiries() {
-    try {
-        const res = await fetch("http://localhost:4000/admin/enquiries");
-        if (!res.ok) throw new Error("Failed to fetch enquiries");
-        const data = await res.json();
-
-        if (!data.length) {
-        document.getElementById("content").innerHTML = "<p>No enquiries found.</p>";
-        return;
+        // Logout function
+        function logout() {
+            fetch("http://localhost:4000/admin/logout")
+                .then(() => window.location.href = "admin-login.html")
+                .catch(err => console.error(err));
         }
 
-        let html = `<h2>Enquiries</h2>
+        //Dashboard default
+        async function loadDashboard() {
+            try {
+
+                let html = `
+            <main class="content" id="content">
+            <h2>Welcome Admin 👋</h2>
+            <p>Select an option from the sidebar to view data</p>
+
+            `;
+                
+                html += `</main>`;
+                document.getElementById("content").innerHTML = html;
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById("content").innerHTML = "<p style='color:red;'>Failed to load enquiries</p>";
+            }
+        }
+
+
+        // Load Enquiries
+        async function loadEnquiries() {
+            try {
+                const res = await fetch("http://localhost:4000/admin/enquiries");
+                if (!res.ok) throw new Error("Failed to fetch enquiries");
+                const data = await res.json();
+
+                if (!data.length) {
+                    document.getElementById("content").innerHTML = "<p>No enquiries found.</p>";
+                    return;
+                }
+
+                let html = `<h2>Enquiries</h2>
         <table>
             <tr>
             <th>Name</th><th>Email</th><th>Phone</th><th>Event Type</th><th>Message</th>
             </tr>`;
-        data.forEach(e => {
-        html += `<tr>
+                data.forEach(e => {
+                    html += `<tr>
             <td>${e.name}</td>
             <td>${e.email}</td>
             <td>${e.phone}</td>
             <td>${e.eventType}</td>
             <td>${e.message || "-"}</td>
         </tr>`;
-        });
-        html += `</table>`;
-        document.getElementById("content").innerHTML = html;
+                });
+                html += `</table>`;
+                document.getElementById("content").innerHTML = html;
 
-    } catch (err) {
-        console.error(err);
-        document.getElementById("content").innerHTML = "<p style='color:red;'>Failed to load enquiries</p>";
-    }
-    }
-
-    // Load Bookings
-    async function loadBookings() {
-    try {
-        const res = await fetch("http://localhost:4000/admin/bookings");
-        if (!res.ok) throw new Error("Failed to fetch bookings");
-        const data = await res.json();
-
-        if (!data.length) {
-        document.getElementById("content").innerHTML = "<p>No bookings found.</p>";
-        return;
+            } catch (err) {
+                console.error(err);
+                document.getElementById("content").innerHTML = "<p style='color:red;'>Failed to load enquiries</p>";
+            }
         }
 
-        let html = `<h2>Bookings</h2>
+        // Load Bookings
+        async function loadBookings() {
+            try {
+                const res = await fetch("http://localhost:4000/admin/bookings");
+                if (!res.ok) throw new Error("Failed to fetch bookings");
+                const data = await res.json();
+
+                if (!data.length) {
+                    document.getElementById("content").innerHTML = "<p>No bookings found.</p>";
+                    return;
+                }
+
+                let html = `<h2>Bookings</h2>
         <table>
             <tr>
             <th>Event</th><th>Name</th><th>Email</th><th>Phone</th>
             <th>Date</th><th>Guests</th><th>Venue</th>
             </tr>`;
-        data.forEach(b => {
-        html += `<tr>
+                data.forEach(b => {
+                    html += `<tr>
             <td>${b.eventName}</td>
             <td>${b.name}</td>
             <td>${b.email}</td>
@@ -102,16 +127,17 @@
             <td>${b.guests}</td>
             <td>${b.venue || "-"}</td>
         </tr>`;
-        });
-        html += `</table>`;
-        document.getElementById("content").innerHTML = html;
+                });
+                html += `</table>`;
+                document.getElementById("content").innerHTML = html;
 
-    } catch (err) {
-        console.error(err);
-        document.getElementById("content").innerHTML = "<p style='color:red;'>Failed to load bookings</p>";
-    }
-    }
+            } catch (err) {
+                console.error(err);
+                document.getElementById("content").innerHTML = "<p style='color:red;'>Failed to load bookings</p>";
+            }
+        }
     </script>
 
-    </body>
-    </html>
+</body>
+
+</html>
